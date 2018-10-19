@@ -326,13 +326,13 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     
     // MARK: - Button Actions
     
-    func onTouchCancelButton() {
+    @objc func onTouchCancelButton() {
         dismiss(animated: true, completion: {
             self.contactDelegate?.epContactPicker(self, didCancel: NSError(domain: "EPContactPickerErrorDomain", code: 2, userInfo: [ NSLocalizedDescriptionKey: "User Canceled Selection"]))
         })
     }
     
-    func onTouchDoneButton() {
+    @objc func onTouchDoneButton() {
         dismiss(animated: true, completion: {
             self.contactDelegate?.epContactPicker(self, didSelectMultipleContacts: self.selectedContacts)
         })
@@ -345,7 +345,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
         if let searchText = resultSearchController.searchBar.text , searchController.isActive {
             
             let predicate: NSPredicate
-            if searchText.characters.count > 0 {
+            if searchText.count > 0 {
                 predicate = CNContact.predicateForContacts(matchingName: searchText)
             } else {
                 predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactsStore!.defaultContainerIdentifier())
