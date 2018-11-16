@@ -75,11 +75,11 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     func inititlizeBarButtons() {
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(onTouchCancelButton))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onTouchCancelButton))
         self.navigationItem.leftBarButtonItem = cancelButton
         
         if multiSelectEnabled {
-            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(onTouchDoneButton))
+            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onTouchDoneButton))
             self.navigationItem.rightBarButtonItem = doneButton
             
         }
@@ -156,8 +156,8 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             
             let productName = Bundle.main.infoDictionary!["CFBundleName"]!
             
-            let alert = UIAlertController(title: "Unable to access contacts", message: "\(productName) does not have access to contacts. Kindly enable it in privacy settings ", preferredStyle: UIAlertControllerStyle.alert)
-            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {  action in
+            let alert = UIAlertController(title: "Unable to access contacts", message: "\(productName) does not have access to contacts. Kindly enable it in privacy settings ", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: {  action in
                 completion([], error)
                 self.dismiss(animated: true, completion: {
                     self.contactDelegate?.epContactPicker(self, didContactFetchFailed: error)
@@ -264,7 +264,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     
     override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! EPContactCell
-        cell.accessoryType = UITableViewCellAccessoryType.none
+        cell.accessoryType = .none
         //Convert CNContact to EPContact
         let contact: EPContact
         
@@ -280,7 +280,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
         }
         
         if multiSelectEnabled  && selectedContacts.contains(where: { $0.contactId == contact.contactId }) {
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+            cell.accessoryType = .checkmark
         }
         
         cell.updateContactsinUI(contact, indexPath: indexPath, subtitleType: subtitleCellValue)
@@ -293,14 +293,14 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
         let selectedContact =  cell.contact!
         if multiSelectEnabled {
             //Keeps track of enable=ing and disabling contacts
-            if cell.accessoryType == UITableViewCellAccessoryType.checkmark {
-                cell.accessoryType = UITableViewCellAccessoryType.none
+            if cell.accessoryType == .checkmark {
+                cell.accessoryType = .none
                 selectedContacts = selectedContacts.filter(){
                     return selectedContact.contactId != $0.contactId
                 }
             }
             else {
-                cell.accessoryType = UITableViewCellAccessoryType.checkmark
+                cell.accessoryType = .checkmark
                 selectedContacts.append(selectedContact)
             }
         }
@@ -321,7 +321,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     
     override open func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         if resultSearchController.isActive { return 0 }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: index), at: UITableViewScrollPosition.top , animated: false)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: index), at: .top , animated: false)
         return sortedContactKeys.index(of: title)!
     }
     
